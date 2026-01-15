@@ -1,5 +1,5 @@
 (async()=>{
-  const BASE = "https://raw.githubusercontent.com/USERNAME/REPO/main/"; 
+  const BASE = "https://github.com/huihoangadm/nazowtl/blob/main/core.js"; 
  
   const hash = (str) => {
       let h = 0xdeadbeef;
