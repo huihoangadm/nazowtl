@@ -1,0 +1,10 @@
+{
+  "users": {
+    "712902823993409586": "admin123",
+    "ID_KHACH_HANG_1": "pass_khach_1"
+  },
+  "ranks": {
+    "712902823993409586": "ADMIN",
+    "ID_KHACH_HANG_1": "VIP"
+  }
+}
