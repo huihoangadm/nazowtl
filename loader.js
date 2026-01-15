@@ -1,8 +1,6 @@
 (async()=>{
-  // 🔴 THAY LINK GITHUB CỦA BẠN VÀO DÒNG DƯỚI
   const BASE = "https://raw.githubusercontent.com/huihoangadm/nazowtl/refs/heads/main/core.js"; 
 
-  // HÀM TẠO MÃ BẢO MẬT (HASH)
   const hash = (str) => {
       let h = 0xdeadbeef;
       for(let i=0;i<str.length;i++) h=Math.imul(h^str.charCodeAt(i), 2654435761);
@@ -15,7 +13,7 @@
 
   document.getElementById("go").onclick=async()=>{
     const u=document.getElementById("uid").value.trim();
-    const p_raw=document.getElementById("pass").value.trim(); // Lấy mật khẩu thô
+    const p_raw=document.getElementById("pass").value.trim(); 
     const t=document.getElementById("token").value.trim();
     const btn=document.getElementById("go");
 
@@ -25,10 +23,8 @@
     try {
       const db = await(await fetch(BASE+"database.json?t="+Date.now())).json();
       
-      // 🔥 QUAN TRỌNG: Mã hóa mật khẩu vừa nhập rồi mới so sánh với GitHub
       const p_hashed = hash(p_raw);
 
-      // So sánh mã Hash (chứ không so sánh pass thường nữa)
       if(db.users[u] === p_hashed) {
         btn.innerText = "SUCCESS! LOADING...";
         btn.style.background = "#22c55e";
