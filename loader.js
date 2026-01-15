@@ -1,6 +1,6 @@
 (async()=>{
   // 🔴 THAY LINK GITHUB CỦA BẠN VÀO DÒNG DƯỚI
-  const BASE = "https://raw.githubusercontent.com/USERNAME/REPO/main/"; 
+  const BASE = "https://raw.githubusercontent.com/huihoangadm/nazowtl/refs/heads/main/core.js"; 
 
   // HÀM TẠO MÃ BẢO MẬT (HASH)
   const hash = (str) => {
