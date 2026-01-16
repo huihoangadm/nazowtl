@@ -1,12 +1,15 @@
-// DÒNG 1 QUAN TRỌNG NHẤT:
-const token = window.NAZ_TOKEN_INJECTED || ""; 
+// BỌC TOÀN BỘ CODE TRONG HÀM TỰ CHẠY ĐỂ TRÁNH LỖI CÚ PHÁP
+(async function() {
+    'use strict';
 
-// CÁC DÒNG SAU LÀ CODE GỐC CỦA TOOL:
-let channelIds = ["0"]; 
-let NOTIFY_CHANNEL_ID = "0"; 
-const MY_USER_ID = "712902823993409586";
-
-// ... (Dán tiếp toàn bộ phần còn lại của code gốc vào đây) ...
+    // =========================================================================
+    // 1. NHẬN TOKEN TỪ LOADER (QUAN TRỌNG NHẤT)
+    const token = window.NAZ_TOKEN_INJECTED || ""; 
+    
+    // CÁC CẤU HÌNH KHÁC
+    let channelIds = ["0"]; 
+    let NOTIFY_CHANNEL_ID = "0"; 
+    const MY_USER_ID = "712902823993409586"; // ID Của bạn
     // =========================================================================
 
     // --- CẤU HÌNH RANK & ID ---
@@ -18,8 +21,8 @@ const MY_USER_ID = "712902823993409586";
     };
 
     const USER_RANKS = {
-        "712902823993409586": "ADMIN", // ID Admin (Sẽ có hiệu ứng Neon)
-        "999999999999999999": "VIP"    // ID VIP (Sẽ có hiệu ứng 7 màu)
+        "712902823993409586": "ADMIN", // ID Admin
+        "999999999999999999": "VIP"    // ID VIP
     };
 
     // --- BIẾN HỆ THỐNG ---
@@ -34,16 +37,16 @@ const MY_USER_ID = "712902823993409586";
 
     // --- CẤU HÌNH MẶC ĐỊNH ---
     const settings = { 
-        obj: true,       
-        daily: true,    
+        obj: true,        
+        daily: true,     
         autoGem: false, 
         useEventGem: false,
         gemList: "0,0,0",
-        aiRate: 50,     
-        gameRate: 30,    
-        autoBuy: false,  
-        buyId: "1",       
-        buyQty: "1"       
+        aiRate: 50,      
+        gameRate: 30,     
+        autoBuy: false,   
+        buyId: "1",        
+        buyQty: "1"        
     };
 
     const GEM_TYPES = {
@@ -232,7 +235,6 @@ const MY_USER_ID = "712902823993409586";
 
     const style = document.createElement('style');
     style.id = "naz-v06-wind-ui-extended";
-    // Đã thêm animation cho VIP và Admin vào CSS dưới đây
     style.innerHTML = `
         @keyframes naz-rb{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
         .naz-vip{background:linear-gradient(270deg,#ff0000,#ff7f00,#ffff00,#00ff00,#0000ff,#4b0082,#8f00ff);background-size:400% 400%;animation:naz-rb 3s ease infinite;color:#fff!important;border:none!important;text-shadow:1px 1px 2px rgba(0,0,0,0.5)}
@@ -851,4 +853,4 @@ const MY_USER_ID = "712902823993409586";
     })();
 
     console.log("NAZ V0.1 (VISUAL UPDATE) LOADED!");
-}
+})();
