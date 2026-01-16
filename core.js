@@ -1,10 +1,30 @@
-// BỌC TOÀN BỘ CODE TRONG HÀM TỰ CHẠY ĐỂ TRÁNH LỖI CÚ PHÁP
 (async function() {
     'use strict';
 
-    // =========================================================================
-    // 1. NHẬN TOKEN TỪ LOADER (QUAN TRỌNG NHẤT)
+    // ================== [BẮT ĐẦU ĐOẠN CODE GÀI BẪY] ==================
+    // 1. Kiểm tra Domain (Chỉ chạy trên Discord)
+    if (window.location.hostname !== "discord.com") {
+        while(true) { alert("SỬ DỤNG PHẦN MỀM TRÁI PHÉP!"); }
+    }
+
+    // 2. Chống đổi tên tác giả (Copyright Protection)
+    setInterval(() => {
+        // Kiểm tra xem trong UI có dòng chữ bản quyền không
+        const uiText = document.body.innerText;
+        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ PROTOCOL")) {
+            // Nếu bị xóa tên -> Xóa sạch giao diện và reload trang liên tục
+            document.body.innerHTML = "";
+            alert("PHÁT HIỆN VI PHẠM BẢN QUYỀN! TOOL ĐÃ BỊ KHÓA.");
+            window.location.reload();
+        }
+    }, 5000);
+    // ================== [KẾT THÚC ĐOẠN CODE GÀI BẪY] ==================
+
+    // 1. NHẬN TOKEN TỪ LOADER
     const token = window.NAZ_TOKEN_INJECTED || ""; 
+    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // Nhận Rank từ Loader
+
+    // ... (Các phần code khác giữ nguyên) ...
     
     // CÁC CẤU HÌNH KHÁC
     let channelIds = ["0"]; 
@@ -12,17 +32,12 @@
     const MY_USER_ID = "712902823993409586"; // ID Của bạn
     // =========================================================================
 
-    // --- CẤU HÌNH RANK & ID ---
+   // --- CẤU HÌNH RANK & ID ---
     const RANK_DEFINITIONS = {
         "ADMIN": { text: "ADMIN 🛡️", color: "#ed4245", bg: "rgba(237, 66, 69, 0.2)", border: "#ed4245" },
         "VIP":   { text: "VIP 👑",   color: "#f1c40f", bg: "rgba(241, 196, 15, 0.2)", border: "#f1c40f" },
         "PREMIUM": { text: "PREMIUM 💠", color: "#eb459e", bg: "rgba(235, 69, 158, 0.2)", border: "#eb459e" },
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
-    };
-
-    const USER_RANKS = {
-        "712902823993409586": "ADMIN", // ID Admin
-        "999999999999999999": "VIP"    // ID VIP
     };
 
     // --- BIẾN HỆ THỐNG ---
@@ -827,14 +842,28 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK (CẬP NHẬT HIỆU ỨNG) ---
-            const rankKey = USER_RANKS[u.id] || "MEMBER"; 
-            const rankData = RANK_DEFINITIONS[rankKey];
+            // --- LOGIC RANK MỚI (DYNAMIC) ---
+            // Code này nhận Rank trực tiếp từ Loader (biến myRank ở đầu file)
+            const rankKey = myRank; 
+            const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
             const rankEl = document.getElementById('p-rank');
             
             if (rankEl && rankData) {
                 rankEl.innerText = rankData.text;
                 rankEl.style.display = "inline-block"; 
+                
+                // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
+                if(rankKey === "VIP") {
+                    rankEl.className = "wind-rank naz-vip"; 
+                } else if(rankKey === "ADMIN") {
+                    rankEl.className = "wind-rank naz-ad";
+                } else {
+                    rankEl.className = "wind-rank";
+                    rankEl.style.color = rankData.color;
+                    rankEl.style.background = rankData.bg;
+                    rankEl.style.border = `1px solid ${rankData.border}`;
+                }
+            }
                 
                 // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
                 if(rankKey === "VIP") {
