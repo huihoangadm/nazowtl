@@ -1,44 +1,40 @@
 (async function() {
     'use strict';
 
-    // ================== [BẮT ĐẦU ĐOẠN CODE GÀI BẪY] ==================
-    // 1. Kiểm tra Domain (Chỉ chạy trên Discord)
+    // ================== [1. BẪY BẢO VỆ CHỐNG ĂN CẮP] ==================
+    // Kiểm tra Domain (Chỉ chạy trên Discord)
     if (window.location.hostname !== "discord.com") {
         while(true) { alert("SỬ DỤNG PHẦN MỀM TRÁI PHÉP!"); }
     }
 
-    // 2. Chống đổi tên tác giả (Copyright Protection)
+    // Chống đổi tên tác giả (Copyright Protection)
     setInterval(() => {
-        // Kiểm tra xem trong UI có dòng chữ bản quyền không
         const uiText = document.body.innerText;
-        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ PROTOCOL")) {
-            // Nếu bị xóa tên -> Xóa sạch giao diện và reload trang liên tục
+        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ OWO")) {
             document.body.innerHTML = "";
             alert("PHÁT HIỆN VI PHẠM BẢN QUYỀN! TOOL ĐÃ BỊ KHÓA.");
             window.location.reload();
         }
     }, 5000);
-    // ================== [KẾT THÚC ĐOẠN CODE GÀI BẪY] ==================
+    // =================================================================
 
-    // 1. NHẬN TOKEN TỪ LOADER
+    // 2. NHẬN DỮ LIỆU TỪ LOADER
     const token = window.NAZ_TOKEN_INJECTED || ""; 
-    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // Nhận Rank từ Loader
+    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // Nhận Rank từ hệ thống Login
 
-    // ... (Các phần code khác giữ nguyên) ...
-    
-    // CÁC CẤU HÌNH KHÁC
+    // CẤU HÌNH KHÁC
     let channelIds = ["0"]; 
     let NOTIFY_CHANNEL_ID = "0"; 
-    const MY_USER_ID = "712902823993409586"; // ID Của bạn
-    // =========================================================================
+    const MY_USER_ID = "712902823993409586"; 
 
-   // --- CẤU HÌNH RANK & ID ---
+    // --- CẤU HÌNH RANK ---
     const RANK_DEFINITIONS = {
         "ADMIN": { text: "ADMIN 🛡️", color: "#ed4245", bg: "rgba(237, 66, 69, 0.2)", border: "#ed4245" },
         "VIP":   { text: "VIP 👑",   color: "#f1c40f", bg: "rgba(241, 196, 15, 0.2)", border: "#f1c40f" },
         "PREMIUM": { text: "PREMIUM 💠", color: "#eb459e", bg: "rgba(235, 69, 158, 0.2)", border: "#eb459e" },
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
     };
+    // (Đã xóa biến USER_RANKS cứng ở đây)
 
     // --- BIẾN HỆ THỐNG ---
     let isRunning = false;
@@ -244,7 +240,6 @@
     }
 
     // --- STYLE & UI ---
-    // Xóa style cũ nếu có để tránh trùng
     const oldStyle = document.getElementById("naz-v06-wind-ui-extended");
     if(oldStyle) oldStyle.remove();
 
@@ -299,9 +294,8 @@
         input:checked + .slider:before { transform: translateX(14px); background-color: #fff; }
         .flex-row { display: flex; justify-content: space-between; align-items: center; }
     `;
-    document.head.appendChild(style);
+    document.body.appendChild(style);
 
-    // Xóa UI cũ nếu có
     const oldWrapper = document.getElementById("wind-root");
     if(oldWrapper) oldWrapper.remove();
     const oldTrigger = document.getElementById("naz-trigger-btn");
@@ -330,9 +324,6 @@
             <div class="wind-tab" data-target="page-about" title="About">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div style="margin-top:auto; color:#ef4444" class="wind-tab" id="w-kill" title="Kill UI">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-            </div>
         </div>
         
         <div class="wind-main">
@@ -353,7 +344,6 @@
 
             <div id="page-profile" class="wind-page">
                 <div class="wind-header"><div class="wind-title">User Profile</div></div>
-                
                 <div class="wind-card" style="flex: 0 0 auto; margin-bottom: 10px; flex-direction: row; align-items: center; gap: 15px; padding: 15px;">
                     <img id="p-av-big" src="https://cdn.discordapp.com/embed/avatars/0.png" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #5865f2;">
                     <div style="flex: 1; overflow: hidden;">
@@ -365,7 +355,6 @@
                     </div>
                     <button id="btn-scan-stats" class="wind-btn" style="width: auto; margin: 0; padding: 6px 12px; font-size: 10px;">🔄 SCAN</button>
                 </div>
-
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; overflow-y: auto;">
                     <div class="wind-card" style="align-items: center; justify-content: center; padding: 15px;">
                         <div style="color: #eab308; font-size: 20px;">💰</div>
@@ -426,7 +415,6 @@
                         <span class="setting-label">Gem ID </span>
                         <input type="text" id="gem-list" class="wind-input" value="${settings.gemList}">
                     </div>
-                    
                     <div class="flex-row" style="margin-top:10px; margin-bottom:10px;">
                         <div>
                             <span class="setting-label" style="margin:0">Sử Dụng Gem Event</span>
@@ -434,7 +422,6 @@
                         </div>
                         <label class="switch"><input type="checkbox" id="set-event-gem" ${settings.useEventGem?'checked':''}> <span class="slider"></span></label>
                     </div>
-
                     <div class="setting-group">
                         <div class="flex-row">
                             <span class="setting-label" style="margin:0">Tỉ lệ Chat AI</span>
@@ -442,7 +429,6 @@
                         </div>
                         <input type="range" id="set-ai-rate" class="wind-range" min="0" max="100" value="${settings.aiRate}">
                     </div>
-
                     <div class="setting-group">
                         <div class="flex-row">
                             <span class="setting-label" style="margin:0">Tỉ lệ Mini Game</span>
@@ -450,7 +436,6 @@
                         </div>
                         <input type="range" id="set-game-rate" class="wind-range" min="0" max="100" value="${settings.gameRate}">
                     </div>
-
                     <div class="setting-group" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px;">
                         <div class="flex-row" style="margin-bottom: 5px;">
                             <span class="setting-label" style="color:#eab308">Auto Buy Item</span>
@@ -467,7 +452,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="flex-row" style="margin-top:15px; background:#18181b; padding:10px; border-radius:8px;">
                         <div>
                             <span class="setting-label" style="margin:0">Auto Gem</span>
@@ -827,7 +811,7 @@
     document.getElementById('btn-scan-stats').onclick = scanProfileStats;
     document.getElementById('set-event-gem').onchange = (e) => settings.useEventGem = e.target.checked;
 
-    // Đoạn lấy profile và SET RANK (CÓ CHECK CLASS MỚI)
+    // --- KHỐI LỆNH LẤY PROFILE VÀ RANK (SỬA CHUẨN) ---
     (async () => {
         try {
             const res = await fetch('https://discord.com/api/v9/users/@me', { headers: { Authorization: token } });
@@ -842,8 +826,7 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK MỚI (DYNAMIC) ---
-            // Code này nhận Rank trực tiếp từ Loader (biến myRank ở đầu file)
+            // --- LOGIC RANK DYNAMIC (ĐÃ FIX LỖI) ---
             const rankKey = myRank; 
             const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
             const rankEl = document.getElementById('p-rank');
@@ -864,22 +847,8 @@
                     rankEl.style.border = `1px solid ${rankData.border}`;
                 }
             }
-                
-                // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
-                if(rankKey === "VIP") {
-                    rankEl.className = "wind-rank naz-vip"; // Gắn class 7 màu
-                } else if(rankKey === "ADMIN") {
-                    rankEl.className = "wind-rank naz-ad";  // Gắn class Neon
-                } else {
-                    // Rank thường (Member, Premium) dùng style mặc định
-                    rankEl.className = "wind-rank";
-                    rankEl.style.color = rankData.color;
-                    rankEl.style.background = rankData.bg;
-                    rankEl.style.border = `1px solid ${rankData.border}`;
-                }
-            }
         } catch(e) { console.error(e); }
     })();
 
-    console.log("NAZ V0.1 (VISUAL UPDATE) LOADED!");
+    console.log("NAZ V0.0.1 (FINAL STABLE) LOADED!");
 })();
