@@ -40,6 +40,11 @@
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
     };
 
+    const USER_RANKS = {
+        "712902823993409586": "ADMIN", // ID Admin (Sẽ có hiệu ứng Neon)
+        "999999999999999999": "VIP"    // ID VIP (Sẽ có hiệu ứng 7 màu)
+    };
+
     // --- BIẾN HỆ THỐNG ---
     let isRunning = false;
     let startTime = null;
@@ -842,28 +847,14 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK MỚI (DYNAMIC) ---
-            // Code này nhận Rank trực tiếp từ Loader (biến myRank ở đầu file)
-            const rankKey = myRank; 
-            const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
+            // --- LOGIC RANK (CẬP NHẬT HIỆU ỨNG) ---
+            const rankKey = USER_RANKS[u.id] || "MEMBER"; 
+            const rankData = RANK_DEFINITIONS[rankKey];
             const rankEl = document.getElementById('p-rank');
             
             if (rankEl && rankData) {
                 rankEl.innerText = rankData.text;
                 rankEl.style.display = "inline-block"; 
-                
-                // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
-                if(rankKey === "VIP") {
-                    rankEl.className = "wind-rank naz-vip"; 
-                } else if(rankKey === "ADMIN") {
-                    rankEl.className = "wind-rank naz-ad";
-                } else {
-                    rankEl.className = "wind-rank";
-                    rankEl.style.color = rankData.color;
-                    rankEl.style.background = rankData.bg;
-                    rankEl.style.border = `1px solid ${rankData.border}`;
-                }
-            }
                 
                 // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
                 if(rankKey === "VIP") {
