@@ -20,19 +20,16 @@
     }, 5000);
     // ================== [KẾT THÚC ĐOẠN CODE GÀI BẪY] ==================
 
-    // 1. NHẬN TOKEN TỪ LOADER
+    // 1. NHẬN TOKEN VÀ RANK TỪ LOADER (QUAN TRỌNG)
     const token = window.NAZ_TOKEN_INJECTED || ""; 
-    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // Nhận Rank từ Loader
+    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // <--- Đây là biến chứa Rank lấy từ GitHub
 
-    // ... (Các phần code khác giữ nguyên) ...
-    
     // CÁC CẤU HÌNH KHÁC
     let channelIds = ["0"]; 
     let NOTIFY_CHANNEL_ID = "0"; 
     const MY_USER_ID = "712902823993409586"; // ID Của bạn
-    // =========================================================================
 
-   // --- CẤU HÌNH RANK & ID ---
+    // --- CẤU HÌNH RANK ---
     const RANK_DEFINITIONS = {
         "ADMIN": { text: "ADMIN 🛡️", color: "#ed4245", bg: "rgba(237, 66, 69, 0.2)", border: "#ed4245" },
         "VIP":   { text: "VIP 👑",   color: "#f1c40f", bg: "rgba(241, 196, 15, 0.2)", border: "#f1c40f" },
@@ -40,10 +37,8 @@
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
     };
 
-    const USER_RANKS = {
-        "712902823993409586": "ADMIN", // ID Admin (Sẽ có hiệu ứng Neon)
-        "999999999999999999": "VIP"    // ID VIP (Sẽ có hiệu ứng 7 màu)
-    };
+    // [ĐÃ XÓA]: const USER_RANKS = { ... } 
+    // Lý do: Chúng ta không dùng danh sách cứng nữa mà dùng biến myRank ở trên.
 
     // --- BIẾN HỆ THỐNG ---
     let isRunning = false;
@@ -304,7 +299,7 @@
         input:checked + .slider:before { transform: translateX(14px); background-color: #fff; }
         .flex-row { display: flex; justify-content: space-between; align-items: center; }
     `;
-    document.head.appendChild(style);
+    document.body.appendChild(style);
 
     // Xóa UI cũ nếu có
     const oldWrapper = document.getElementById("wind-root");
@@ -847,9 +842,10 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK (CẬP NHẬT HIỆU ỨNG) ---
-            const rankKey = USER_RANKS[u.id] || "MEMBER"; 
-            const rankData = RANK_DEFINITIONS[rankKey];
+            // --- [ĐÃ SỬA] LOGIC RANK TỪ GITHUB ---
+            // Thay vì lấy từ danh sách cứng, ta lấy từ biến myRank ở đầu file
+            const rankKey = myRank; 
+            const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
             const rankEl = document.getElementById('p-rank');
             
             if (rankEl && rankData) {
@@ -862,7 +858,6 @@
                 } else if(rankKey === "ADMIN") {
                     rankEl.className = "wind-rank naz-ad";  // Gắn class Neon
                 } else {
-                    // Rank thường (Member, Premium) dùng style mặc định
                     rankEl.className = "wind-rank";
                     rankEl.style.color = rankData.color;
                     rankEl.style.background = rankData.bg;
