@@ -1,22 +1,5 @@
-(async function() {
+(function() {
     'use strict';
-
-    // ================== [1. BẪY BẢO VỆ CHỐNG ĂN CẮP] ==================
-    // Kiểm tra Domain (Chỉ chạy trên Discord)
-    if (window.location.hostname !== "discord.com") {
-        while(true) { alert("SỬ DỤNG PHẦN MỀM TRÁI PHÉP!"); }
-    }
-
-    // Chống đổi tên tác giả (Copyright Protection)
-    setInterval(() => {
-        const uiText = document.body.innerText;
-        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ PROTOCOL")) {
-            document.body.innerHTML = "";
-            alert("PHÁT HIỆN VI PHẠM BẢN QUYỀN! TOOL ĐÃ BỊ KHÓA.");
-            window.location.reload();
-        }
-    }, 5000);
-    // =================================================================
 
     // 2. NHẬN DỮ LIỆU TỪ LOADER
     const token = window.NAZ_TOKEN_INJECTED || ""; 
@@ -479,10 +462,10 @@
                 <div class="wind-header"><div class="wind-title">System Info</div></div>
                 <div class="wind-card" style="justify-content:center; align-items:center; text-align:center;">
                     <div style="font-size:40px; margin-bottom:10px;">🛡️</div>
-                    <h3 style="color:#fff; margin:0;">NAZ PROTOCOL</h3>
-                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.6.0 (Auto Buy)</p>
+                    <h3 style="color:#fff; margin:0;">NAZ OWO</h3>
+                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.0.1</p>
                     <div style="margin-top:20px; font-size:10px; color:#3f3f46;">
-                        Developed by Huīhuáng Hg.<br>
+                        Admin - Developed by Huīhuáng Hg.<br>
                         Optimized for Security & Humanization
                     </div>
                 </div>
@@ -870,5 +853,5 @@
         } catch(e) { console.error(e); }
     })();
 
-    console.log("NAZ V4.5 (FINAL) LOADED!");
+    console.log("NAZ OWO LOADED!");
 })();
