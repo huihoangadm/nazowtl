@@ -1,33 +1,33 @@
 (async function() {
     'use strict';
 
-    // ================== [1. BẪY BẢO VỆ CHỐNG ĂN CẮP] ==================
-    // Kiểm tra Domain (Chỉ chạy trên Discord)
+    // ================== [BẮT ĐẦU ĐOẠN CODE GÀI BẪY] ==================
+    // 1. Kiểm tra Domain (Chỉ chạy trên Discord)
     if (window.location.hostname !== "discord.com") {
         while(true) { alert("SỬ DỤNG PHẦN MỀM TRÁI PHÉP!"); }
     }
 
-    // Chống đổi tên tác giả (Copyright Protection)
+    // 2. Chống đổi tên tác giả (Copyright Protection)
     setInterval(() => {
+        // Kiểm tra xem trong UI có dòng chữ bản quyền không
         const uiText = document.body.innerText;
-        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ OWO")) {
+        if (!uiText.includes("Huīhuáng Hg") && !uiText.includes("NAZ PROTOCOL")) {
+            // Nếu bị xóa tên -> Xóa sạch giao diện và reload trang liên tục
             document.body.innerHTML = "";
             alert("PHÁT HIỆN VI PHẠM BẢN QUYỀN! TOOL ĐÃ BỊ KHÓA.");
             window.location.reload();
         }
     }, 5000);
-    // =================================================================
+    // ================== [KẾT THÚC ĐOẠN CODE GÀI BẪY] ==================
 
-    // 2. NHẬN DỮ LIỆU TỪ LOADER
+    // 1. NHẬN TOKEN VÀ RANK TỪ LOADER (QUAN TRỌNG)
     const token = window.NAZ_TOKEN_INJECTED || ""; 
-    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // Nhận Rank từ Loader
+    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // <--- Đây là biến chứa Rank lấy từ GitHub
 
-    // CẤU HÌNH KHÁC
+    // CÁC CẤU HÌNH KHÁC
     let channelIds = ["0"]; 
     let NOTIFY_CHANNEL_ID = "0"; 
-    
-    // [ĐÃ SỬA] Để trống để tự động lấy ID sau
-    let MY_USER_ID = ""; 
+    const MY_USER_ID = "712902823993409586"; // ID Của bạn
 
     // --- CẤU HÌNH RANK ---
     const RANK_DEFINITIONS = {
@@ -36,6 +36,9 @@
         "PREMIUM": { text: "PREMIUM 💠", color: "#eb459e", bg: "rgba(235, 69, 158, 0.2)", border: "#eb459e" },
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
     };
+
+    // [ĐÃ XÓA]: const USER_RANKS = { ... } 
+    // Lý do: Chúng ta không dùng danh sách cứng nữa mà dùng biến myRank ở trên.
 
     // --- BIẾN HỆ THỐNG ---
     let isRunning = false;
@@ -479,10 +482,10 @@
                 <div class="wind-header"><div class="wind-title">System Info</div></div>
                 <div class="wind-card" style="justify-content:center; align-items:center; text-align:center;">
                     <div style="font-size:40px; margin-bottom:10px;">🛡️</div>
-                    <h3 style="color:#fff; margin:0;">NAZ OWO</h3>
-                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.0.1</p>
+                    <h3 style="color:#fff; margin:0;">NAZ PROTOCOL</h3>
+                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.6.0 (Auto Buy)</p>
                     <div style="margin-top:20px; font-size:10px; color:#3f3f46;">
-                       Admin - Developed by Huīhuáng Hg.<br>
+                        Developed by Huīhuáng Hg.<br>
                         Optimized for Security & Humanization
                     </div>
                 </div>
@@ -830,13 +833,6 @@
             const res = await fetch('https://discord.com/api/v9/users/@me', { headers: { Authorization: token } });
             const u = await res.json();
             
-            // --- [NEW] TỰ ĐỘNG LẤY ID USER ---
-            if(u.id) {
-                MY_USER_ID = u.id; 
-                console.log("NAZ DETECTED USER:", MY_USER_ID);
-            }
-            // ---------------------------------
-
             // Load Avatar & Name
             if (u.id && u.avatar) document.getElementById('w-av').src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`;
             if (u.id && u.avatar) document.getElementById('p-av-big').src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`;
@@ -846,7 +842,8 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK TỪ GITHUB ---
+            // --- [ĐÃ SỬA] LOGIC RANK TỪ GITHUB ---
+            // Thay vì lấy từ danh sách cứng, ta lấy từ biến myRank ở đầu file
             const rankKey = myRank; 
             const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
             const rankEl = document.getElementById('p-rank');
@@ -870,5 +867,5 @@
         } catch(e) { console.error(e); }
     })();
 
-    console.log("NAZ OWO V0.0.1 (FINAL) LOADED!");
+    console.log("NAZ V0.1 (VISUAL UPDATE) LOADED!");
 })();
