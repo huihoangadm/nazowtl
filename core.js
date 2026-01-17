@@ -29,25 +29,25 @@
  
     if (Math.random() > 0.99) { _0x_PROTECT_CORE(); }
 
-
-
+    // 1. NHẬN TOKEN VÀ RANK TỪ LOADER (QUAN TRỌNG)
     const token = window.NAZ_TOKEN_INJECTED || ""; 
-    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; 
+    const myRank = window.NAZ_RANK_INJECTED || "MEMBER"; // <--- Đây là biến chứa Rank lấy từ GitHub
 
-
+    // CÁC CẤU HÌNH KHÁC
     let channelIds = ["0"]; 
     let NOTIFY_CHANNEL_ID = "0"; 
-    
+    let MY_USER_ID = ""; // ID Của bạn
 
-    let MY_USER_ID = ""; 
-
-
+    // --- CẤU HÌNH RANK ---
     const RANK_DEFINITIONS = {
         "ADMIN": { text: "ADMIN 🛡️", color: "#ed4245", bg: "rgba(237, 66, 69, 0.2)", border: "#ed4245" },
         "VIP":   { text: "VIP 👑",   color: "#f1c40f", bg: "rgba(241, 196, 15, 0.2)", border: "#f1c40f" },
         "PREMIUM": { text: "PREMIUM 💠", color: "#eb459e", bg: "rgba(235, 69, 158, 0.2)", border: "#eb459e" },
         "MEMBER":  { text: "MEMBER",   color: "#99aab5", bg: "rgba(153, 170, 181, 0.2)", border: "#99aab5" }
     };
+
+    // [ĐÃ XÓA]: const USER_RANKS = { ... } 
+    // Lý do: Chúng ta không dùng danh sách cứng nữa mà dùng biến myRank ở trên.
 
     // --- BIẾN HỆ THỐNG ---
     let isRunning = false;
@@ -253,6 +253,7 @@
     }
 
     // --- STYLE & UI ---
+    // Xóa style cũ nếu có để tránh trùng
     const oldStyle = document.getElementById("naz-v06-wind-ui-extended");
     if(oldStyle) oldStyle.remove();
 
@@ -309,6 +310,7 @@
     `;
     document.body.appendChild(style);
 
+    // Xóa UI cũ nếu có
     const oldWrapper = document.getElementById("wind-root");
     if(oldWrapper) oldWrapper.remove();
     const oldTrigger = document.getElementById("naz-trigger-btn");
@@ -490,9 +492,9 @@
                 <div class="wind-card" style="justify-content:center; align-items:center; text-align:center;">
                     <div style="font-size:40px; margin-bottom:10px;">🛡️</div>
                     <h3 style="color:#fff; margin:0;">NAZ OWO</h3>
-                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.0.1</p>
+                    <p style="font-size:11px; color:#52525b; margin-top:5px;">Version 0.0.1)</p>
                     <div style="margin-top:20px; font-size:10px; color:#3f3f46;">
-                       Admin - Developed by Huīhuáng Hg.<br>
+                        Admin - Developed by Huīhuáng Hg.<br>
                         Optimized for Security & Humanization
                     </div>
                 </div>
@@ -834,19 +836,23 @@
     document.getElementById('btn-scan-stats').onclick = scanProfileStats;
     document.getElementById('set-event-gem').onchange = (e) => settings.useEventGem = e.target.checked;
 
-
+    // Đoạn lấy profile và SET RANK (CÓ CHECK CLASS MỚI)
     (async () => {
         try {
+
             const res = await fetch('https://discord.com/api/v9/users/@me', { headers: { Authorization: token } });
             const u = await res.json();
             
-
+            // --- THÊM DÒNG NÀY ---
             if(u.id) {
-                MY_USER_ID = u.id; 
-                console.log("NAZ DETECTED USER:", MY_USER_ID);
+                MY_USER_ID = u.id; // Tự động lấy ID người đang dùng tool gán vào biến
+                console.log("Đã nhận diện User ID:", MY_USER_ID);
             }
-            // ---------------------------------
+            // ---------------------
 
+            // Load Avatar & Name
+            // ... (Code cũ giữ nguyên)
+            
             // Load Avatar & Name
             if (u.id && u.avatar) document.getElementById('w-av').src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`;
             if (u.id && u.avatar) document.getElementById('p-av-big').src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`;
@@ -856,7 +862,8 @@
             document.getElementById('p-id').innerText = u.id;
             myGlobalName = displayName;
 
-            // --- LOGIC RANK TỪ GITHUB ---
+            // --- [ĐÃ SỬA] LOGIC RANK TỪ GITHUB ---
+            // Thay vì lấy từ danh sách cứng, ta lấy từ biến myRank ở đầu file
             const rankKey = myRank; 
             const rankData = RANK_DEFINITIONS[rankKey] || RANK_DEFINITIONS["MEMBER"];
             const rankEl = document.getElementById('p-rank');
@@ -865,11 +872,11 @@
                 rankEl.innerText = rankData.text;
                 rankEl.style.display = "inline-block"; 
                 
-
+                // KIỂM TRA ĐỂ GẮN HIỆU ỨNG VISUAL
                 if(rankKey === "VIP") {
-                    rankEl.className = "wind-rank naz-vip"; 
+                    rankEl.className = "wind-rank naz-vip"; // Gắn class 7 màu
                 } else if(rankKey === "ADMIN") {
-                    rankEl.className = "wind-rank naz-ad";  
+                    rankEl.className = "wind-rank naz-ad";  // Gắn class Neon
                 } else {
                     rankEl.className = "wind-rank";
                     rankEl.style.color = rankData.color;
@@ -880,5 +887,5 @@
         } catch(e) { console.error(e); }
     })();
 
-    console.log("NAZ V.0.0.1 LOADED!");
+    console.log("NAZ V0.0.1 LOADED!");
 })();
